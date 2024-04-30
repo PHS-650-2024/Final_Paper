@@ -4,6 +4,7 @@
 
 # Load necessary packages
 library(lme4)
+library(Matrix)
 
 # Run generalized linear mixed effect model
 m1 <- glmer(gold ~ sex_c + (1 | id), data = d_mixed, family = binomial("logit"))
