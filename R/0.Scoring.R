@@ -18,7 +18,7 @@ d <- d %>%
                                "Bronze" = 0)))
 
 # Create a centered sex variable 
-d$sex_c <- dplyr::recode(olympics$sex, "M" = -0.5, "F" = 0.5)
+d$sex_c <- dplyr::recode(d$sex, "M" = -0.5, "F" = 0.5)
 
 # Subset data to only include years 1994 and onward
 d1994 <- subset(d, year >= 1994 & !is.na(age) & !is.na(weight) & !is.na(id) & !is.na(gold))
@@ -37,3 +37,5 @@ d1994$gold <- factor(d1994$gold, levels = c(1, 0))
 # Recode id for grouping by athlete
 d1994$id <- factor(d1994$id) 
 
+# Export scored dataset with new variables
+write.csv(d1994, file = "oly_scored.csv")

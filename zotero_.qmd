@@ -1,8 +1,0 @@
----
-title: "zotero_"
-format: html
-editor: visual
-bibliography: references.bib
----
-
-We are practicing integrating zotero with quarto @kotov2022

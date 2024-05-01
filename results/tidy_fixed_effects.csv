@@ -1,0 +1,4 @@
+"effect","group","term","estimate","std.error","statistic","p.value"
+"fixed",NA,"(Intercept)",-0.873495346412573,0.0263688072442491,-33.1260848593399,1.25188654280405e-240
+"fixed",NA,"age_scaled",0.00171150770352497,0.0205643829710712,0.083226795860232,0.933671206632514
+"ran_pars","id","sd__(Intercept)",0.803657501671917,NA,NA,NA
