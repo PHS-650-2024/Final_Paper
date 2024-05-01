@@ -1,0 +1,179 @@
+---
+title: "Final Paper"
+format: html
+editor: visual
+bibliography: references.bib
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+library(dplyr)
+library(janitor)
+library(kableExtra)
+```
+
+```{r,echo=FALSE}
+# Include at least 3 citations throughout the manuscript
+
+# Reference your OSF pre-registrations somewhere in the paper
+
+# don't render QMD file until you're the only one working; rendering could affect downstream files
+
+# add word to the .yml file
+
+# add tinytex to the terminal
+
+# Include at least 3 citations throughout the manuscript, along with one table and one figure for each aim, with appropriate cross-referencing. Headings and # subheadings should be set appropriately. Discuss variable scoring in the method section, and reference your OSF pre-registrations somewhere in the paper.
+```
+
+## Introduction
+
+The Olympic Games, a prestigious international sporting event, epitomize the pinnacle of athleticism. Athletes who qualify to compete at the Olympics represent the elite, possessing physical capabilities that are nothing short of exceptional. However, the intensity of competing at such a high level can exert a significant toll on their bodies, challenging their physical limits through rigorous competitions and demanding training schedules. Fortunately, recent advancements in sports medicine have played a crucial role in supporting these athletes.
+
+Innovations in rehabilitation techniques, injury prevention, and nutritional strategies are enabling athletes to extend their careers, competing effectively at more advanced ages relative to some of their peers. This progress not only enhances their performance but also improves their recovery and overall health, allowing them to maintain peak physical condition for longer than ever before. But how does an athlete's age relate to their performance? Are older Olympic athletes more experienced and disciplined, giving them a competitive edge that results in greater odds of winning a gold medal rather than silver or bronze? How might the link between age and winning gold medals compare to that of other personal characteristics, such as gender identity among athletes competing in mixed-gender teams?
+
+## Method
+
+### Research Transparency
+
+We value open science and adhered to high standards of research integrity in this study, maximizing research transparency and replicability through several means.
+
+First, we preregistered our research aims, hypotheses, data manipulations, analytic plans, and the exact analytic code proposed for hypothesis testing on the Open Science Framework (OSF). The preregistrations for Aim 1 @laboe2024 and Aim 2 @ward2024 are time-stamped and publicly accessible.
+
+In this manuscript, we also explicitly label our analyses as confirmatory or exploratory and identify any deviations from the preregistred study protocols.
+
+Finally, we provide detailed descriptions of our data, methodologies, and data analysis procedures in the following sections and have shared all analysis scripts in our publicly-accessible GitHub repository.
+
+### Data Description
+
+To explore these research questions, we conducted a secondary analysis using a longitudinal, historical dataset on the modern Olympic Games. These data include all the Games, from Athens 1896 to Rio 2016, but the Winter and Summer Games were held in the same year up until 1992. As the Games were staggered on a four year cycle starting with 1994, we used a subset of the *Olympics* dataset with years 1994 and onwards. The Olympics dataset included the raw variables outlined in @tbl-raw.
+
+As this is a secondary analysis of the longitudinal, #tidytuesday 'Olympics' dataset, we cannot take credit for collecting or sharing these data with the public. The Olympic data [@sportsr] is the result of labor performed by a group of Olympic history enthusiasts. For more information, please refer to their blog [@olympsta2024]. For details on where and how the Olympic dataset can be accessed, please refer to Kaggle.com [@120year] and GitHub [@tidytues].
+
+```{r,echo=FALSE}
+#| label: tbl-raw
+#| tbl-cap: "Original Data Dictionary"
+
+# create a data frame for the original Olympic data dictionary
+raw_vars <- data.frame(
+  Variable = c("id", "name", "sex", "age", "height", "weight", "team", 
+               "noc", "games", "year", "season", "city", "sport", "event", "medal"),
+  Class = c("double", "character", "character", "double", "double", "double", "character", 
+            "character", "character", "double", "character", "character", "character", "character", "character"),
+  Description = c("Athlete ID", "Athlete Name", "Athlete Sex", "Athlete Age", 
+                  "Athlete Height in cm", "Athlete weight in kg", "Country/Team competing for",
+                  "noc region", "Olympic games name", "Year of olympics", "Season either winter or summer",
+                  "City of Olympic host", "Sport", "Specific event", "Medal (Gold, Silver, Bronze or NA)")
+)
+
+kable(raw_vars, booktabs = TRUE, align = 'lll', col.names = c("Variable", "Class", "Description")) %>%
+  kable_styling(full_width = FALSE)
+```
+
+
+### Variable Scoring
+
+We manipulated a few of these variables for use in analyses designed to address our research questions. Please refer to @tbl-new for a summary of the changes outlined in more detail below.
+
+#### Gold Medal
+
+To create the outcome variable for hypothesis testing, the raw "medal" character variable was recoded as a dichotomous "gold" factor variable with levels for "gold" (1), and "silver or bronze" = (0). Observations for athletes competing during a given year who did not win a medal were treated as not applicable (NA).
+
+#### Event Gender
+
+The raw "event" variable in the Olympics dataset represented multiple variables in one, including the type of sport, whether the event was for individuals or teams, and whether the event was for Men, Women, or Mixed-gender teams.\
+\
+Good enough practices in scientific computing recommend making each column a variable when working to create analysis-friendly data @wilson2017. As such, we extracted the gender category from the "event" column and coded a new "event_gender" character variable with categorical levels outlined in @tbl-gend.
+
+```{r,echo=FALSE}
+#| label: tbl-gend
+#| tbl-cap: "Event Gender Categories"
+ev_gend <- data.frame(
+  levels = c("Men's", "Mixed", "Women's"),
+  n = c("182260", "16940", "71916"),
+  percent = c("67", "6", "27"))
+
+kable(ev_gend, booktabs = TRUE, align = 'lll', 
+      col.names = c("Levels", "n", "Percent")) %>%
+  kable_styling(full_width = FALSE)
+```
+
+#### Athlete Gender
+
+To create the athlete gender predictor variable for testing Hypothesis 1, the raw "sex" character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), making it easier to interpret regression coefficients @brauer2018. In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for "M" (-0.5) and "F" (0.5) should facilitate the modeling and interpretation gender-related effects.
+
+```{r,echo=FALSE}
+#| label: tbl-new
+#| tbl-cap: "Manipulated Olympics Variables"
+
+new_vars <- data.frame(
+  raw_variables = c("medal", "event", "id", "sex"),
+  original_class = c("character", "character", "double", "character"),
+  change = c("dichotomized", "extracted gender from events", "converted to factor", "contrast coded"),
+  new_variables = c("gold", "event_gender", "id", "sex_c"),
+  new_class = c("factor", "character", "factor", "double")
+)
+
+kable(new_vars, booktabs = TRUE, align = 'lll', 
+      col.names = c("Raw Variables", "Original Class", "Change", "New Variables", "New Class")) %>%
+  kable_styling(full_width = FALSE)
+```
+
+### Specific Aims
+
+#### Aim 1
+
+To analyze the influence of biological sex on the likelihood of winning a gold medal among athletes who competed as members of mixed-gender teams in the Olympic Games from 1994 onwards.
+
+#### Aim 2
+
+To analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onwards, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.
+
+### Hypotheses
+
+#### Hypothesis 1
+
+H1: Males will be more likely to receive a gold medal during the Olympic Games than their female teammates.
+
+#### Hypothesis 2
+
+H2: After controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onwards is significantly, positively associated with the age of the athlete, such that every one-unit increase in age increases the odds of winning gold (versus silver or bronze).
+
+## Results
+
+### Aim 1
+
+
+
+### Aim 2
+
+Hypothesis 2 was not supported. See @tbl-aim2 for more information.
+
+```{r,echo=FALSE}
+#| label: tbl-aim2
+#| tbl-cap: "Mixed-Effects Logistic Regression Model Predicting Gold from Age"
+df1 <- read.csv("~/Documents/final_steph/data/tidy_fixed_effects.csv")
+df2 <- read.csv("~/Documents/final_steph/data/tidy_random_effects.csv")
+df3 <- read.csv("~/Documents/final_steph/data/aim2_summary_output.csv")
+
+aim2_df <- bind_rows(df1, df2, df3)
+
+# Use kable to create a nice table format
+kable(aim2_df, booktabs = TRUE, align = 'lll', 
+      col.names = c("Effect", "Group", "Term", "Estimate", "SE", "Statistic", "p",
+                    "AIC", "BIC", "logLik")) %>%
+  kable_styling(full_width = FALSE)
+```
+
+```{r,echo=FALSE}
+#| label: fig-aim2fig1
+#| fig-cap: "Coefficient Plot Visualizing the Fixed Effects"
+
+```
+
+![](images/aim2fig1.png)
+
+## Discussion
+
+## References
