@@ -2,6 +2,9 @@
 library(readr)
 library(tidyverse)
 
+# Set working directory to Final Paper folder
+# setwd("Desktop/PHS 650/Final Paper")
+
 # Read in the data
 d <- read_csv("data/olympics.csv")
 
