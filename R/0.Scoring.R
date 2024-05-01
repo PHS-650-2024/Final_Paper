@@ -2,6 +2,9 @@
 library(readr)
 library(tidyverse)
 
+# Set working directory to Final Paper folder
+# setwd("Desktop/PHS 650/Final Paper")
+
 # Read in the data
 d <- read_csv("data/olympics.csv")
 
@@ -18,7 +21,7 @@ d <- d %>%
                                "Bronze" = 0)))
 
 # Create a centered sex variable 
-d$sex_c <- dplyr::recode(olympics$sex, "M" = -0.5, "F" = 0.5)
+d$sex_c <- dplyr::recode(d$sex, "M" = -0.5, "F" = 0.5)
 
 # Subset data to only include years 1994 and onward
 d1994 <- subset(d, year >= 1994 & !is.na(age) & !is.na(weight) & !is.na(id) & !is.na(gold))
