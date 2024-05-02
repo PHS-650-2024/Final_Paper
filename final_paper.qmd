@@ -20,25 +20,24 @@ library(dplyr)
 library(janitor)
 library(kableExtra)
 library(broom.mixed)
+library(webshot2)
 ```
 
 ```{r,echo=FALSE}
-# Done:
-# # Include at least 3 citations throughout the manuscript 
-# # Reference your OSF pre-registrations somewhere in the paper
-
-# Still need to:
-# # add README text file 
-# # add tinytex to the terminal ?
-# # add word to the .yml file = will do last
-
+# replace "format: html" with the following to knit to MS word docx
+#  format:
+#  docx:
+#    toc: true
+#    number-sections: true
+#    highlight-style: github
+#    prefer-html: true
 ```
 
 ## Introduction
 
 The Olympic Games, a prestigious international sporting event, epitomize the pinnacle of athleticism. Athletes who qualify to compete at the Olympics represent the elite, possessing physical capabilities that are nothing short of exceptional. However, the intensity of competing at such a high level can exert a significant toll on their bodies, challenging their physical limits through rigorous competitions and demanding training schedules. Fortunately, recent advancements in sports medicine have played a crucial role in supporting these athletes.
 
-Innovations in rehabilitation techniques, injury prevention, and nutritional strategies are enabling athletes to extend their careers, competing effectively at more advanced ages relative to some of their peers. This progress not only enhances their performance but also improves their recovery and overall health, allowing them to maintain peak physical condition for longer than ever before. But how does an athlete's age relate to their performance? Are older Olympic athletes more experienced and disciplined, giving them a competitive edge that results in greater odds of winning a gold medal rather than silver or bronze? How might the link between age and winning gold medals compare to that of other personal characteristics, such as gender identity among athletes competing in mixed-gender teams?
+Innovations in rehabilitation techniques, injury prevention, and nutritional strategies are enabling athletes to extend their careers, competing effectively at more advanced ages relative to some of their peers. This progress not only enhances their performance but also improves their recovery and overall health, allowing them to maintain peak physical condition for longer than ever before. But how does an athlete's age relate to their performance? Are older Olympic athletes more experienced and disciplined, giving them a competitive edge that results in greater odds of winning a gold medal rather than silver or bronze? How might the link between age and winning gold medals compare to that of other personal characteristics, such as the biological sex of athletes competing in mixed-gender teams?
 
 ## Method
 
@@ -120,17 +119,17 @@ kable(ev_gend, booktabs = TRUE, align = 'lll',
   kable_styling(full_width = FALSE)
 ```
 
-#### Athlete Gender
+#### Athlete Biological Sex
 
-To create the athlete gender predictor variable for testing Hypothesis 1, the raw "sex" character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), easing interpretations of regression coefficients [@brauer2018].
+To create the athlete sex predictor variable for testing Hypothesis 1, the raw "sex" character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), easing interpretations of regression coefficients [@brauer2018].
 
-In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for "M" (-0.5) and "F" (0.5) should facilitate the modeling and interpretation gender-related effects.
+In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for "M" (-0.5) and "F" (0.5) should facilitate the modeling and interpretation of sex-related effects.
 
 ### Specific Aims
 
 #### Aim 1
 
-We first aimed to analyze the influence of biological sex on the likelihood of winning a gold medal among athletes who competed as members of mixed-gender teams in the Olympic Games from 1994 onwards and won a medal.
+We first aimed to analyze the influence of biological sex on the likelihood of winning a gold medal among athletes who competed as members of mixed-gender teams and won a medal in the Olympic Games from 1994 onward.
 
 #### Aim 2
 
@@ -150,19 +149,15 @@ H2: After controlling for the non-independence of multiple observations per athl
 
 ### Aim 1
 
-We ran a generalized linear mixed effects model, controlling for the non-independence of multiple observations per athlete, to test Hypothesis 1. Hypothesis 1 was not supported. Being female instead of male was associated with a -0.326 decrease in log likelihood of winning a gold medal (if winning a medal) for individuals who participated in a mix-gender Olympic sport after 1994. However, this effect was not statistically significant (p=0.124).
+We ran a generalized linear mixed effects model, controlling for the non-independence of multiple observations per athlete, to test Hypothesis 1. Hypothesis 1 was not supported. As depicted in @fig-aim1fig1, being female instead of male was associated with a -0.326 decrease in log likelihood of winning a gold medal (if winning a medal) for individuals who participated in a mix-gender Olympic sport after 1994. However, this effect was not statistically significant (p=0.124).
 
 See @tbl-aim1 for more information.
 
 ```{r, echo=FALSE}
 #| label: tbl-aim1
-#| tbl-cap: "Mixed-Effects Logistic Regression Model Predicting Gold from Gender"
+#| tbl-cap: "Mixed-Effects Logistic Regression Model Predicting Gold from Biological Sex"
 
-# aim1_anova <- readRDS("results/anova_results.rds")
-# kable(aim1_anova, booktabs = TRUE, align = 'lll') %>%
-#  kable_styling(full_width = FALSE)
-
-aim1_glmer <- readRDS("results/glmer_model.rds")
+aim1_glmer <- readRDS("results/aim1.glmer_model.rds")
 aim1_fixed <- tidy(aim1_glmer, effects = "fixed")
 aim1_random <- tidy(aim1_glmer, effects = "ran_pars")
 aim1_df <- bind_rows(aim1_fixed, aim1_random)
@@ -178,20 +173,20 @@ kable(aim1_df, booktabs = TRUE, align = 'lll',
 
 ```{r, echo=FALSE}
 #| label: fig-aim1fig1
-#| fig-cap: "Fixed Effects Bar Plot Visualizing Impact of Gender on Gold"
+#| fig-cap: "Fixed Effects Plot Visualizing Impact of Athelete Sex on Gold"
 
 knitr::include_graphics("figs/aim1_plot_gold.png")
 ```
 
 ### Aim 2
 
-We ran a generalized linear mixed effects model, controlling for the non-independence of multiple observations per athlete, to test Hypothesis 2. Hypothesis 2 was not supported. For every one unit increase in age, the log likelihood of winning gold increased by 0.002, and this effect was not significant (p=0.934). See @tbl-aim2 for more information.
+We ran a generalized linear mixed effects model, controlling for the non-independence of multiple observations per athlete, to test Hypothesis 2. Hypothesis 2 was not supported. AIC and BIC provide a measure of the model's quality and complexity, with lower values generally indicating a better fit. These values (AIC = 18246.7, BIC = 18269.5) suggest the model was a poor fit to the data. As depicted in @fig-aim2fig1, for every one unit increase in age, the odds of winning a gold medal increased by only 0.002, and this effect was not significant (p=0.934). See @tbl-aim2 for more information.
 
 ```{r,echo=FALSE}
 #| label: tbl-aim2
 #| tbl-cap: "Mixed-Effects Logistic Regression Model Predicting Gold from Age"
-df1 <- read.csv("results/tidy_fixed_effects.csv")
-df2 <- read.csv("results/tidy_random_effects.csv")
+df1 <- read.csv("results/aim2_fixed_effects.csv")
+df2 <- read.csv("results/aim2_random_effects.csv")
 df3 <- read.csv("results/aim2_summary_output.csv")
 
 aim2_df <- bind_rows(df1, df2)
@@ -200,7 +195,7 @@ aim2_df <- aim2_df %>%
   mutate(across(where(is.numeric), ~round(., 3)),
          across(everything(), ~ifelse(is.na(.), "-", .)))  # Replace NA with "-"
 
-# Use kable to create a nice table format
+# use kable to format table
 kable(aim2_df, booktabs = TRUE, align = 'lll', 
       col.names = c("Effect", "Group", "Term", "Estimate", "SE", "Statistic", "p")) %>%
   kable_styling(full_width = FALSE)
@@ -210,15 +205,15 @@ kable(aim2_df, booktabs = TRUE, align = 'lll',
 #| label: fig-aim2fig1
 #| fig-cap: "Fixed Effects Coefficient Plot Visualizing Impact of Age on Gold"
 
-knitr::include_graphics("figs/aim2fig1.png")
+knitr::include_graphics("figs/aim2.png")
 ```
 
 ## Discussion
 
-In sum, we conducted a secondary analysis of the longitudinal, #tidytuesday 'Olympics' dataset. Specifically, we sought to examine the effect of gender on winning a gold medal (when any medal was won) for individuals who competed in a mixed-gender Olympic sport after 1994. We also aimed to investigate the effect of age on winning a gold medal (when any medal was won) for individuals who competed in a mixed-gender Olympic sports after 1994.
+In sum, we conducted a secondary analysis of the longitudinal, #tidytuesday 'Olympics' dataset. Specifically, we sought to examine the effect of biological sex on winning a gold medal (when any medal was won) for individuals who competed in a mixed-gender Olympic sport after 1992. We also aimed to investigate the effect of age on winning a gold medal (when any medal was won) for individuals who competed in the Olympic Games after 1992.
 
 Our first hypothesis was that males would be more likely to win a gold medal during the Olympic Games than females. This hypothesis was not supported. The lack of support is likely due to the fact that many mixed-gender sports are team-based (e.g., figure skating), such that if a male on a given team wins a gold medal, so will a female. Future analyses can look at the effect of gender on the odds of winning a gold medal when men and women are not on the same team.
 
-Our second hypothesis was that after controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onward is significantly, positively associated with the age of the athlete, such that every one-unit increase in age increases the odds of winning gold (versus silver or bronze). This hypothesis was not supported. Future research can investigate why there is not a relationship between age and likelihood of winning a gold medal. Perhaps although older athletes are more experienced in their sport, younger athletes have been trained better as training has improved over the years.
+Our second hypothesis was that after controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onward would be significantly, positively associated with the age of the athlete, such that every one-unit increase in age would increase the odds of winning gold (versus silver or bronze). This hypothesis was not supported. Future research should investigate differences in peak performance age ranges between sport and event types. Perhaps older, more experienced and disciplined athletes are at an advantage during certain sports, whereas younger athletes with fewer competing life-commitments and a lower likelihood of prior injury have the competitive edge in other event types.
 
 ## References

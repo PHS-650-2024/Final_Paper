@@ -35,21 +35,19 @@ m1_scaled <- glmer(gold ~ age_scaled + (1 | id), data = d, family = binomial,
 
 # extracting fixed effects (estimates, standard errors, z-values, and p-values)
 aim2_fixed <- tidy(m1_scaled, effects = "fixed") # tidy fixed effects
-write.csv(aim2_fixed, "tidy_fixed_effects.csv", row.names = FALSE) # save tidy output
+write.csv(aim2_fixed, "results/aim2_fixed_effects.csv", row.names = FALSE) # save to results
 
 # extracting random effects variances
 aim2_random <- tidy(m1_scaled, effects = "ran_pars") # tidy random effects
-write.csv(aim2_random, "tidy_random_effects.csv", row.names = FALSE) # save tidy output
+write.csv(aim2_random, "results/aim2_random_effects.csv", row.names = FALSE) # save to results
 
 # extract summary statistics
 aim2_summary_df <- data.frame(
   AIC = AIC(m1_scaled),
   BIC = BIC(m1_scaled),
-  logLik = as.numeric(logLik(m1_scaled))  # converting logLik object to numeric
-)
+  logLik = as.numeric(logLik(m1_scaled)))
 
-# save the model summary
-write.csv(aim2_summary_df, "aim2_summary_output.csv", row.names = FALSE)
+write.csv(aim2_summary_df, "results/aim2_summary_output.csv", row.names = FALSE) # save the model summary to results
 
 # Coefficient plot
 aim2fig1 <- ggplot(aim2_fixed, aes(x = term, y = estimate, ymin = estimate - std.error, ymax = estimate + std.error)) +
@@ -58,4 +56,4 @@ aim2fig1 <- ggplot(aim2_fixed, aes(x = term, y = estimate, ymin = estimate - std
   theme_minimal() +
   labs(title = "Fixed Effects Coefficients", y = "Estimate", x = "")
 
-ggsave("figs/aim2fig1.png", plot = aim2fig1, width = 8, height = 6, dpi = 300)
+ggsave("figs/aim2.png", plot = aim2fig1, width = 8, height = 6, dpi = 300)

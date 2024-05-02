@@ -145,7 +145,7 @@ div.csl-indent {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The Olympic Games, a prestigious international sporting event, epitomize the pinnacle of athleticism. Athletes who qualify to compete at the Olympics represent the elite, possessing physical capabilities that are nothing short of exceptional. However, the intensity of competing at such a high level can exert a significant toll on their bodies, challenging their physical limits through rigorous competitions and demanding training schedules. Fortunately, recent advancements in sports medicine have played a crucial role in supporting these athletes.</p>
-<p>Innovations in rehabilitation techniques, injury prevention, and nutritional strategies are enabling athletes to extend their careers, competing effectively at more advanced ages relative to some of their peers. This progress not only enhances their performance but also improves their recovery and overall health, allowing them to maintain peak physical condition for longer than ever before. But how does an athlete’s age relate to their performance? Are older Olympic athletes more experienced and disciplined, giving them a competitive edge that results in greater odds of winning a gold medal rather than silver or bronze? How might the link between age and winning gold medals compare to that of other personal characteristics, such as gender identity among athletes competing in mixed-gender teams?</p>
+<p>Innovations in rehabilitation techniques, injury prevention, and nutritional strategies are enabling athletes to extend their careers, competing effectively at more advanced ages relative to some of their peers. This progress not only enhances their performance but also improves their recovery and overall health, allowing them to maintain peak physical condition for longer than ever before. But how does an athlete’s age relate to their performance? Are older Olympic athletes more experienced and disciplined, giving them a competitive edge that results in greater odds of winning a gold medal rather than silver or bronze? How might the link between age and winning gold medals compare to that of other personal characteristics, such as the biological sex of athletes competing in mixed-gender teams?</p>
 </section>
 <section id="method" class="level2">
 <h2 class="anchored" data-anchor-id="method">Method</h2>
@@ -353,21 +353,21 @@ Good enough practices in scientific computing recommend making each column a var
 </div>
 </div>
 </section>
-<section id="athlete-gender" class="level4">
-<h4 class="anchored" data-anchor-id="athlete-gender">Athlete Gender</h4>
-<p>To create the athlete gender predictor variable for testing Hypothesis 1, the raw “sex” character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), easing interpretations of regression coefficients <span class="citation" data-cites="brauer2018">(<a href="#ref-brauer2018" role="doc-biblioref">Brauer and Curtin 2018</a>)</span>.</p>
-<p>In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for “M” (-0.5) and “F” (0.5) should facilitate the modeling and interpretation gender-related effects.</p>
+<section id="athlete-biological-sex" class="level4">
+<h4 class="anchored" data-anchor-id="athlete-biological-sex">Athlete Biological Sex</h4>
+<p>To create the athlete sex predictor variable for testing Hypothesis 1, the raw “sex” character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), easing interpretations of regression coefficients <span class="citation" data-cites="brauer2018">(<a href="#ref-brauer2018" role="doc-biblioref">Brauer and Curtin 2018</a>)</span>.</p>
+<p>In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for “M” (-0.5) and “F” (0.5) should facilitate the modeling and interpretation of sex-related effects.</p>
 </section>
 </section>
 <section id="specific-aims" class="level3">
 <h3 class="anchored" data-anchor-id="specific-aims">Specific Aims</h3>
 <section id="aim-1" class="level4">
 <h4 class="anchored" data-anchor-id="aim-1">Aim 1</h4>
-<p>To analyze the influence of biological sex on the likelihood of winning a gold medal among athletes who competed as members of mixed-gender teams in the Olympic Games from 1994 onwards.</p>
+<p>We first aimed to analyze the influence of biological sex on the likelihood of winning a gold medal among athletes who competed as members of mixed-gender teams and won a medal in the Olympic Games from 1994 onward.</p>
 </section>
 <section id="aim-2" class="level4">
 <h4 class="anchored" data-anchor-id="aim-2">Aim 2</h4>
-<p>To analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onward, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.</p>
+<p>We also aimed to analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onward, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.</p>
 </section>
 </section>
 <section id="hypotheses" class="level3">
@@ -386,11 +386,13 @@ Good enough practices in scientific computing recommend making each column a var
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <section id="aim-1-1" class="level3">
 <h3 class="anchored" data-anchor-id="aim-1-1">Aim 1</h3>
+<p>We ran a generalized linear mixed effects model, controlling for the non-independence of multiple observations per athlete, to test Hypothesis 1. Hypothesis 1 was not supported. As depicted in <a href="#fig-aim1fig1">Figure&nbsp;1</a>, being female instead of male was associated with a -0.326 decrease in log likelihood of winning a gold medal (if winning a medal) for individuals who participated in a mix-gender Olympic sport after 1994. However, this effect was not statistically significant (p=0.124).</p>
+<p>See <a href="#tbl-aim1">Table&nbsp;4</a> for more information.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="tbl-aim1" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;4: Mixed-Effects Logistic Regression Model Predicting Gold from Gender</caption>
+<caption>Table&nbsp;4: Mixed-Effects Logistic Regression Model Predicting Gold from Biological Sex</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Effect</th>
@@ -441,8 +443,8 @@ Good enough practices in scientific computing recommend making each column a var
 <div class="cell-output-display">
 <div id="fig-aim1fig1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="figs/fixed_effects_plot_bar.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;1: Fixed Effects Bar Plot Visualizing Impact of Gender on Gold</figcaption>
+<p><img src="figs/aim1_plot_gold.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Fixed Effects Plot Visualizing Impact of Athelete Sex on Gold</figcaption>
 </figure>
 </div>
 </div>
@@ -450,7 +452,7 @@ Good enough practices in scientific computing recommend making each column a var
 </section>
 <section id="aim-2-1" class="level3">
 <h3 class="anchored" data-anchor-id="aim-2-1">Aim 2</h3>
-<p>Hypothesis 2 was not supported. See <a href="#tbl-aim2">Table&nbsp;5</a> for more information.</p>
+<p>We ran a generalized linear mixed effects model, controlling for the non-independence of multiple observations per athlete, to test Hypothesis 2. Hypothesis 2 was not supported. AIC and BIC provide a measure of the model’s quality and complexity, with lower values generally indicating a better fit. These values (AIC = 18246.7, BIC = 18269.5) suggest the model was a poor fit to the data. As depicted in <a href="#fig-aim2fig1">Figure&nbsp;2</a>, for every one unit increase in age, the odds of winning a gold medal increased by only 0.002, and this effect was not significant (p=0.934). See <a href="#tbl-aim2">Table&nbsp;5</a> for more information.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="tbl-aim2" class="anchored">
@@ -470,39 +472,30 @@ Good enough practices in scientific computing recommend making each column a var
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">fixed</td>
-<td style="text-align: left;">-</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: left;">-0.873</td>
 <td style="text-align: left;">0.026</td>
 <td style="text-align: left;">-33.126</td>
 <td style="text-align: left;">0</td>
+<td style="text-align: left;">-</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">fixed</td>
-<td style="text-align: left;">-</td>
 <td style="text-align: left;">age_scaled</td>
 <td style="text-align: left;">0.002</td>
 <td style="text-align: left;">0.021</td>
 <td style="text-align: left;">0.083</td>
 <td style="text-align: left;">0.934</td>
+<td style="text-align: left;">-</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ran_pars</td>
-<td style="text-align: left;">id</td>
 <td style="text-align: left;">sd__(Intercept)</td>
 <td style="text-align: left;">0.804</td>
 <td style="text-align: left;">-</td>
 <td style="text-align: left;">-</td>
 <td style="text-align: left;">-</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ran_pars</td>
 <td style="text-align: left;">id</td>
-<td style="text-align: left;">sd__(Intercept)</td>
-<td style="text-align: left;">0.804</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: left;">-</td>
 </tr>
 </tbody>
 </table>
@@ -515,7 +508,7 @@ Good enough practices in scientific computing recommend making each column a var
 <div class="cell-output-display">
 <div id="fig-aim2fig1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="figs/aim2fig1.png" class="img-fluid figure-img"></p>
+<p><img src="figs/aim2.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Fixed Effects Coefficient Plot Visualizing Impact of Age on Gold</figcaption>
 </figure>
 </div>
@@ -525,6 +518,9 @@ Good enough practices in scientific computing recommend making each column a var
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>In sum, we conducted a secondary analysis of the longitudinal, #tidytuesday ‘Olympics’ dataset. Specifically, we sought to examine the effect of biological sex on winning a gold medal (when any medal was won) for individuals who competed in a mixed-gender Olympic sport after 1992. We also aimed to investigate the effect of age on winning a gold medal (when any medal was won) for individuals who competed in the Olympic Games after 1992.</p>
+<p>Our first hypothesis was that males would be more likely to win a gold medal during the Olympic Games than females. This hypothesis was not supported. The lack of support is likely due to the fact that many mixed-gender sports are team-based (e.g., figure skating), such that if a male on a given team wins a gold medal, so will a female. Future analyses can look at the effect of gender on the odds of winning a gold medal when men and women are not on the same team.</p>
+<p>Our second hypothesis was that after controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onward would be significantly, positively associated with the age of the athlete, such that every one-unit increase in age would increase the odds of winning gold (versus silver or bronze). This hypothesis was not supported. Future research should investigate differences in peak performance age ranges between sport and event types. Perhaps older, more experienced and disciplined athletes are at an advantage during certain sports, whereas younger athletes with fewer competing life-commitments and a lower likelihood of prior injury have the competitive edge in other event types.</p>
 </section>
 <section id="references" class="level2">
 
