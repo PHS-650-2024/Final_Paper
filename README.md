@@ -20,10 +20,13 @@ This repository contains the analysis code, datasets, and results for our study 
   - **Method**: Details on the dataset, variable scoring, and analytical methods used.
   - **Results**: Presentation of findings with tables for each specific aim and associated figures.
   - **Discussion**: Summary and potential future research directions.
+  
 
 ## Manuscript
 
 The manuscript derived from this project has been published on [GitHub Pages](<https://phs-650-2024.github.io/Final_Paper/>), providing an accessible version of the complete study.
+
+- **/docs/**: Folder containing the manuscript in both a MS word docx (`final_paper.docx`) and HTML file (`final_paper.html`).  
 
 ## Preregistrations
 
