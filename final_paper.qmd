@@ -29,8 +29,6 @@ library(broom.mixed)
 
 # Still need to:
 # # add README text file 
-# # write discussion paragraph
-# # flesh out results  
 # # add tinytex to the terminal ?
 # # add word to the .yml file = will do last
 
@@ -132,11 +130,11 @@ In this case, the coefficient provides the average difference between the two ca
 
 #### Aim 1
 
-To analyze the influence of biological sex on the likelihood of winning a gold medal among athletes who competed as members of mixed-gender teams in the Olympic Games from 1994 onwards.
+We first aimed to analyze the influence of biological sex on the likelihood of winning a gold medal among athletes who competed as members of mixed-gender teams in the Olympic Games from 1994 onwards and won a medal.
 
 #### Aim 2
 
-To analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onward, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.
+We also aimed to analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onward, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.
 
 ### Hypotheses
 
@@ -151,6 +149,10 @@ H2: After controlling for the non-independence of multiple observations per athl
 ## Results
 
 ### Aim 1
+
+We ran a generalized linear mixed effects model, controlling for the non-independence of multiple observations per athlete, to test Hypothesis 1. Hypothesis 1 was not supported. Being female instead of male was associated with a -0.326 decrease in log likelihood of winning a gold medal (if winning a medal) for individuals who participated in a mix-gender Olympic sport after 1994. However, this effect was not statistically significant (p=0.124).
+
+See @tbl-aim1 for more information.
 
 ```{r, echo=FALSE}
 #| label: tbl-aim1
@@ -178,19 +180,19 @@ kable(aim1_df, booktabs = TRUE, align = 'lll',
 #| label: fig-aim1fig1
 #| fig-cap: "Fixed Effects Bar Plot Visualizing Impact of Gender on Gold"
 
-knitr::include_graphics("figs/fixed_effects_plot_bar.png")
+knitr::include_graphics("figs/aim1_plot_gold.png")
 ```
 
 ### Aim 2
 
-Hypothesis 2 was not supported. See @tbl-aim2 for more information.
+We ran a generalized linear mixed effects model, controlling for the non-independence of multiple observations per athlete, to test Hypothesis 2. Hypothesis 2 was not supported. For every one unit increase in age, the log likelihood of winning gold increased by 0.002, and this effect was not significant (p=0.934). See @tbl-aim2 for more information.
 
 ```{r,echo=FALSE}
 #| label: tbl-aim2
 #| tbl-cap: "Mixed-Effects Logistic Regression Model Predicting Gold from Age"
-df1 <- read.csv("~/Documents/final_steph/results/tidy_fixed_effects.csv")
-df2 <- read.csv("~/Documents/final_steph/results/tidy_random_effects.csv")
-df3 <- read.csv("~/Documents/final_steph/results/aim2_summary_output.csv")
+df1 <- read.csv("results/tidy_fixed_effects.csv")
+df2 <- read.csv("results/tidy_random_effects.csv")
+df3 <- read.csv("results/aim2_summary_output.csv")
 
 aim2_df <- bind_rows(df1, df2)
 
@@ -212,5 +214,11 @@ knitr::include_graphics("figs/aim2fig1.png")
 ```
 
 ## Discussion
+
+In sum, we conducted a secondary analysis of the longitudinal, #tidytuesday 'Olympics' dataset. Specifically, we sought to examine the effect of gender on winning a gold medal (when any medal was won) for individuals who competed in a mixed-gender Olympic sport after 1994. We also aimed to investigate the effect of age on winning a gold medal (when any medal was won) for individuals who competed in a mixed-gender Olympic sports after 1994.
+
+Our first hypothesis was that males would be more likely to win a gold medal during the Olympic Games than females. This hypothesis was not supported. The lack of support is likely due to the fact that many mixed-gender sports are team-based (e.g., figure skating), such that if a male on a given team wins a gold medal, so will a female. Future analyses can look at the effect of gender on the odds of winning a gold medal when men and women are not on the same team.
+
+Our second hypothesis was that after controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onward is significantly, positively associated with the age of the athlete, such that every one-unit increase in age increases the odds of winning gold (versus silver or bronze). This hypothesis was not supported. Future research can investigate why there is not a relationship between age and likelihood of winning a gold medal. Perhaps although older athletes are more experienced in their sport, younger athletes have been trained better as training has improved over the years.
 
 ## References

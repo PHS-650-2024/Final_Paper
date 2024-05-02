@@ -58,4 +58,4 @@ aim2fig1 <- ggplot(aim2_fixed, aes(x = term, y = estimate, ymin = estimate - std
   theme_minimal() +
   labs(title = "Fixed Effects Coefficients", y = "Estimate", x = "")
 
-ggsave("aim2fig1.png", plot = aim2fig1, width = 8, height = 6, dpi = 300)
+ggsave("figs/aim2fig1.png", plot = aim2fig1, width = 8, height = 6, dpi = 300)
