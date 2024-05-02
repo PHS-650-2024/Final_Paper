@@ -31,7 +31,7 @@ m1_scaled <- glmer(gold ~ age_scaled + (1 | id), data = d, family = binomial,
                    control = glmerControl(optimizer = "bobyqa"))
 
 # view new model output 
-summary(m1_scaled)
+(summary(m1_scaled))
 
 # extracting fixed effects (estimates, standard errors, z-values, and p-values)
 aim2_fixed <- tidy(m1_scaled, effects = "fixed") # tidy fixed effects
@@ -45,7 +45,7 @@ write.csv(aim2_random, "tidy_random_effects.csv", row.names = FALSE) # save tidy
 aim2_summary_df <- data.frame(
   AIC = AIC(m1_scaled),
   BIC = BIC(m1_scaled),
-  logLik = as.numeric(logLik(m1_scaled))  # Converting logLik object to numeric
+  logLik = as.numeric(logLik(m1_scaled))  # converting logLik object to numeric
 )
 
 # save the model summary

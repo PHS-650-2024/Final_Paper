@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Aggie Laboe">
+<meta name="author" content="Stephanie B. Ward">
+<meta name="dcterms.date" content="2024-05-01">
 
-<title>Final Paper</title>
+<title>How do personal characteristics influence an athlete’s odds of winning gold?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -96,14 +99,42 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Final Paper</h1>
+<h1 class="title">How do personal characteristics influence an athlete’s odds of winning gold?</h1>
+<p class="subtitle lead">A Secondary Analysis of the Olympic Games</p>
 </div>
 
 
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Aggie Laboe </p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            University of Wisconsin-Madison
+          </p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    <p class="author">Stephanie B. Ward </p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            University of Wisconsin-Madison
+          </p>
+      </div>
+    </div>
 
 <div class="quarto-title-meta">
 
-    
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 1, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -121,14 +152,13 @@ div.csl-indent {
 <section id="research-transparency" class="level3">
 <h3 class="anchored" data-anchor-id="research-transparency">Research Transparency</h3>
 <p>We value open science and adhered to high standards of research integrity in this study, maximizing research transparency and replicability through several means.</p>
-<p>First, we preregistered our research aims, hypotheses, data manipulations, analytic plans, and the exact analytic code proposed for hypothesis testing on the Open Science Framework (OSF). The preregistrations for Aim 1 <span class="citation" data-cites="laboe2024">Laboe (<a href="#ref-laboe2024" role="doc-biblioref">2024</a>)</span> and Aim 2 <span class="citation" data-cites="ward2024">Ward (<a href="#ref-ward2024" role="doc-biblioref">2024</a>)</span> are time-stamped and publicly accessible.</p>
-<p>In this manuscript, we also explicitly label our analyses as confirmatory or exploratory and identify any deviations from the preregistred study protocols.</p>
-<p>Finally, we provide detailed descriptions of our data, methodologies, and data analysis procedures in the following sections and have shared all analysis scripts in our publicly-accessible GitHub repository.</p>
+<p>First, we preregistered our research aims, hypotheses, data manipulations, analytic plans, and the exact analytic code proposed for hypothesis testing on the Open Science Framework (OSF). Preregistrations for Aims 1 <span class="citation" data-cites="laboe2024">(<a href="#ref-laboe2024" role="doc-biblioref">Laboe 2024</a>)</span> and 2 <span class="citation" data-cites="ward2024">(<a href="#ref-ward2024" role="doc-biblioref">Ward 2024</a>)</span> are time-stamped and publicly accessible.</p>
+<p>We also provide R scripts for scoring and hypothesis testing on this project’s publicly-accessible GitHub repository; these analysis scripts can be run in their entirety with the Olympics data. Finally, we provide detailed descriptions of our data, methodologies, and data analysis procedures in the following sections.</p>
 </section>
 <section id="data-description" class="level3">
 <h3 class="anchored" data-anchor-id="data-description">Data Description</h3>
 <p>To explore these research questions, we conducted a secondary analysis using a longitudinal, historical dataset on the modern Olympic Games. These data include all the Games, from Athens 1896 to Rio 2016, but the Winter and Summer Games were held in the same year up until 1992. As the Games were staggered on a four year cycle starting with 1994, we used a subset of the <em>Olympics</em> dataset with years 1994 and onwards. The Olympics dataset included the raw variables outlined in <a href="#tbl-raw">Table&nbsp;1</a>.</p>
-<p>As this is a secondary analysis of the longitudinal, #tidytuesday ‘Olympics’ dataset, we cannot take credit for collecting or sharing these data with the public. The Olympic data <span class="citation" data-cites="sportsr">(<a href="#ref-sportsr" role="doc-biblioref"><span>“Sports Reference | Sports Stats, Fast, Easy, and up-to-Date,”</span> n.d.</a>)</span> is the result of labor performed by a group of Olympic history enthusiasts. For more information, please refer to their blog <span class="citation" data-cites="olympsta2024">(<a href="#ref-olympsta2024" role="doc-biblioref"><span>“OlympStats”</span> 2024</a>)</span>. For details on where and how the Olympic dataset can be accessed, please refer to Kaggle.com <span class="citation" data-cites="120year">(<a href="#ref-120year" role="doc-biblioref"><span>“120 Years of Olympic History: Athletes and Results,”</span> n.d.</a>)</span> and GitHub <span class="citation" data-cites="tidytues">(<a href="#ref-tidytues" role="doc-biblioref"><span>“Tidytuesday/Data/2021/2021-07-27 at Master · Rfordatascience/Tidytuesday,”</span> n.d.</a>)</span>.</p>
+<p>As this is a secondary analysis of the longitudinal, #tidytuesday ‘Olympics’ dataset, we cannot take credit for collecting or sharing these data with the public. The Olympic data is the result of labor performed by a group of Olympic history enthusiasts. For more information, please refer to their blog <span class="citation" data-cites="olympsta2024">(<a href="#ref-olympsta2024" role="doc-biblioref"><span>“OlympStats”</span> 2024</a>)</span>. For details on where and how the Olympic dataset can be accessed, please refer to GitHub <span class="citation" data-cites="tidytuesday2024">(<a href="#ref-tidytuesday2024" role="doc-biblioref">tidytuesday 2024</a>)</span> and Kaggle.com <span class="citation" data-cites="griffin2018">(<a href="#ref-griffin2018" role="doc-biblioref">Griffin 2018</a>)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="tbl-raw" class="anchored">
@@ -227,60 +257,15 @@ div.csl-indent {
 </section>
 <section id="variable-scoring" class="level3">
 <h3 class="anchored" data-anchor-id="variable-scoring">Variable Scoring</h3>
-<p>We manipulated a few of these variables for use in analyses designed to address our research questions. Please refer to <a href="#tbl-new">Table&nbsp;3</a> for a summary of the changes outlined in more detail below.</p>
+<p>We manipulated a few of these variables for use in analyses designed to address our research questions. Please refer to <a href="#tbl-new">Table&nbsp;2</a> for a summary of the changes outlined in more detail below.</p>
 <section id="gold-medal" class="level4">
 <h4 class="anchored" data-anchor-id="gold-medal">Gold Medal</h4>
 <p>To create the outcome variable for hypothesis testing, the raw “medal” character variable was recoded as a dichotomous “gold” factor variable with levels for “gold” (1), and “silver or bronze” = (0). Observations for athletes competing during a given year who did not win a medal were treated as not applicable (NA).</p>
-</section>
-<section id="event-gender" class="level4">
-<h4 class="anchored" data-anchor-id="event-gender">Event Gender</h4>
-<p>The raw “event” variable in the Olympics dataset represented multiple variables in one, including the type of sport, whether the event was for individuals or teams, and whether the event was for Men, Women, or Mixed-gender teams.<br>
-<br>
-Good enough practices in scientific computing recommend making each column a variable when working to create analysis-friendly data <span class="citation" data-cites="wilson2017">Wilson et al. (<a href="#ref-wilson2017" role="doc-biblioref">2017</a>)</span>. As such, we extracted the gender category from the “event” column and coded a new “event_gender” character variable with categorical levels outlined in <a href="#tbl-gend">Table&nbsp;2</a>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="tbl-gend" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;2: Event Gender Categories</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Levels</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">n</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Percent</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Men's</td>
-<td style="text-align: left;">182260</td>
-<td style="text-align: left;">67</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Mixed</td>
-<td style="text-align: left;">16940</td>
-<td style="text-align: left;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Women's</td>
-<td style="text-align: left;">71916</td>
-<td style="text-align: left;">27</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-
-</div>
-</div>
-</section>
-<section id="athlete-gender" class="level4">
-<h4 class="anchored" data-anchor-id="athlete-gender">Athlete Gender</h4>
-<p>To create the athlete gender predictor variable for testing Hypothesis 1, the raw “sex” character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), making it easier to interpret regression coefficients <span class="citation" data-cites="brauer2018">Brauer and Curtin (<a href="#ref-brauer2018" role="doc-biblioref">2018</a>)</span>. In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for “M” (-0.5) and “F” (0.5) should facilitate the modeling and interpretation gender-related effects.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="tbl-new" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;3: Manipulated Olympics Variables</caption>
+<caption>Table&nbsp;2: Manipulated Olympics Variables</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Raw Variables</th>
@@ -327,6 +312,52 @@ Good enough practices in scientific computing recommend making each column a var
 </div>
 </div>
 </section>
+<section id="event-gender" class="level4">
+<h4 class="anchored" data-anchor-id="event-gender">Event Gender</h4>
+<p>The raw “event” variable in the Olympics dataset represented multiple variables in one, including the type of sport, whether the event was for individuals or teams, and whether the event was for Men, Women, or Mixed-gender teams.<br>
+<br>
+Good enough practices in scientific computing recommend making each column a variable when working to create analysis-friendly data <span class="citation" data-cites="wilson2017">(<a href="#ref-wilson2017" role="doc-biblioref">Wilson et al. 2017</a>)</span>. As such, we extracted gender from the “event” column and coded a new “event_gender” character variable with categorical levels outlined in <a href="#tbl-gend">Table&nbsp;3</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-gend" class="anchored">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;3: Event Gender Categories</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Levels</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Men's</td>
+<td style="text-align: left;">182260</td>
+<td style="text-align: left;">67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mixed</td>
+<td style="text-align: left;">16940</td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Women's</td>
+<td style="text-align: left;">71916</td>
+<td style="text-align: left;">27</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+</section>
+<section id="athlete-gender" class="level4">
+<h4 class="anchored" data-anchor-id="athlete-gender">Athlete Gender</h4>
+<p>To create the athlete gender predictor variable for testing Hypothesis 1, the raw “sex” character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), easing interpretations of regression coefficients <span class="citation" data-cites="brauer2018">(<a href="#ref-brauer2018" role="doc-biblioref">Brauer and Curtin 2018</a>)</span>.</p>
+<p>In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for “M” (-0.5) and “F” (0.5) should facilitate the modeling and interpretation gender-related effects.</p>
+</section>
 </section>
 <section id="specific-aims" class="level3">
 <h3 class="anchored" data-anchor-id="specific-aims">Specific Aims</h3>
@@ -336,7 +367,7 @@ Good enough practices in scientific computing recommend making each column a var
 </section>
 <section id="aim-2" class="level4">
 <h4 class="anchored" data-anchor-id="aim-2">Aim 2</h4>
-<p>To analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onwards, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.</p>
+<p>To analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onward, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.</p>
 </section>
 </section>
 <section id="hypotheses" class="level3">
@@ -347,7 +378,7 @@ Good enough practices in scientific computing recommend making each column a var
 </section>
 <section id="hypothesis-2" class="level4">
 <h4 class="anchored" data-anchor-id="hypothesis-2">Hypothesis 2</h4>
-<p>H2: After controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onwards is significantly, positively associated with the age of the athlete, such that every one-unit increase in age increases the odds of winning gold (versus silver or bronze).</p>
+<p>H2: After controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onward is significantly, positively associated with the age of the athlete, such that every one-unit increase in age increases the odds of winning gold (versus silver or bronze).</p>
 </section>
 </section>
 </section>
@@ -355,15 +386,76 @@ Good enough practices in scientific computing recommend making each column a var
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <section id="aim-1-1" class="level3">
 <h3 class="anchored" data-anchor-id="aim-1-1">Aim 1</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-aim1" class="anchored">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;4: Mixed-Effects Logistic Regression Model Predicting Gold from Gender</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Effect</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Term</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Estimate</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Statistic</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">fixed</td>
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: left;">-0.779</td>
+<td style="text-align: left;">0.124</td>
+<td style="text-align: left;">-6.265</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fixed</td>
+<td style="text-align: left;">sex_c</td>
+<td style="text-align: left;">-0.326</td>
+<td style="text-align: left;">0.212</td>
+<td style="text-align: left;">-1.539</td>
+<td style="text-align: left;">0.124</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ran_pars</td>
+<td style="text-align: left;">sd__(Intercept)</td>
+<td style="text-align: left;">0.477</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">id</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-aim1fig1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figs/fixed_effects_plot_bar.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Fixed Effects Bar Plot Visualizing Impact of Gender on Gold</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="aim-2-1" class="level3">
 <h3 class="anchored" data-anchor-id="aim-2-1">Aim 2</h3>
-<p>Hypothesis 2 was not supported. See <a href="#tbl-aim2">Table&nbsp;4</a> for more information.</p>
+<p>Hypothesis 2 was not supported. See <a href="#tbl-aim2">Table&nbsp;5</a> for more information.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="tbl-aim2" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;4: Mixed-Effects Logistic Regression Model Predicting Gold from Age</caption>
+<caption>Table&nbsp;5: Mixed-Effects Logistic Regression Model Predicting Gold from Age</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Effect</th>
@@ -373,71 +465,44 @@ Good enough practices in scientific computing recommend making each column a var
 <th style="text-align: left;" data-quarto-table-cell-role="th">SE</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Statistic</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">p</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">AIC</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">BIC</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">logLik</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">fixed</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">-</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: left;">-0.8734953</td>
-<td style="text-align: left;">0.0263688</td>
-<td style="text-align: left;">-33.1260849</td>
-<td style="text-align: left;">0.0000000</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">-0.873</td>
+<td style="text-align: left;">0.026</td>
+<td style="text-align: left;">-33.126</td>
+<td style="text-align: left;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">fixed</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">-</td>
 <td style="text-align: left;">age_scaled</td>
-<td style="text-align: left;">0.0017115</td>
-<td style="text-align: left;">0.0205644</td>
-<td style="text-align: left;">0.0832268</td>
-<td style="text-align: left;">0.9336712</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.002</td>
+<td style="text-align: left;">0.021</td>
+<td style="text-align: left;">0.083</td>
+<td style="text-align: left;">0.934</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ran_pars</td>
 <td style="text-align: left;">id</td>
 <td style="text-align: left;">sd__(Intercept)</td>
-<td style="text-align: left;">0.8036575</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.804</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">ran_pars</td>
 <td style="text-align: left;">id</td>
 <td style="text-align: left;">sd__(Intercept)</td>
-<td style="text-align: left;">0.8036575</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">18246.7</td>
-<td style="text-align: left;">18269.45</td>
-<td style="text-align: left;">-9120.35</td>
+<td style="text-align: left;">0.804</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
 </tr>
 </tbody>
 </table>
@@ -446,7 +511,16 @@ Good enough practices in scientific computing recommend making each column a var
 
 </div>
 </div>
-<p><img src="images/aim2fig1.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-aim2fig1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figs/aim2fig1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Fixed Effects Coefficient Plot Visualizing Impact of Age on Gold</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="discussion" class="level2">
@@ -460,11 +534,11 @@ Good enough practices in scientific computing recommend making each column a var
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-120year" class="csl-entry" role="listitem">
-<span>“120 Years of Olympic History: Athletes and Results.”</span> n.d. <a href="https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results">https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results</a>.
-</div>
 <div id="ref-brauer2018" class="csl-entry" role="listitem">
 Brauer, Markus, and John J. Curtin. 2018. <span>“Linear Mixed-Effects Models and the Analysis of Nonindependent Data: A Unified Framework to Analyze Categorical and Continuous Independent Variables That Vary Within-Subjects and/or Within-Items.”</span> <em>Psychological Methods</em> 23 (3): 389–411. <a href="https://doi.org/10.1037/met0000159">https://doi.org/10.1037/met0000159</a>.
+</div>
+<div id="ref-griffin2018" class="csl-entry" role="listitem">
+Griffin, R. 2018. <span>“120 Years of Olympic History: Athletes and Results.”</span> <a href="https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results">https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results</a>.
 </div>
 <div id="ref-laboe2024" class="csl-entry" role="listitem">
 Laboe, Agatha. 2024. <span>“PHS 650 Pre-Reg Assignment: Olympic Dataset,”</span> April. <a href="https://doi.org/10.17605/OSF.IO/E8QYF">https://doi.org/10.17605/OSF.IO/E8QYF</a>.
@@ -472,11 +546,8 @@ Laboe, Agatha. 2024. <span>“PHS 650 Pre-Reg Assignment: Olympic Dataset,”</s
 <div id="ref-olympsta2024" class="csl-entry" role="listitem">
 <span>“OlympStats.”</span> 2024. <em>OlympStats</em>. <a href="https://olympstats.com/">https://olympstats.com/</a>.
 </div>
-<div id="ref-sportsr" class="csl-entry" role="listitem">
-<span>“Sports Reference | Sports Stats, Fast, Easy, and up-to-Date.”</span> n.d. <em>Sports-Reference.com</em>. <a href="https://www.sports-reference.com/">https://www.sports-reference.com/</a>.
-</div>
-<div id="ref-tidytues" class="csl-entry" role="listitem">
-<span>“Tidytuesday/Data/2021/2021-07-27 at Master · Rfordatascience/Tidytuesday.”</span> n.d. <em>GitHub</em>. <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-07-27">https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-07-27</a>.
+<div id="ref-tidytuesday2024" class="csl-entry" role="listitem">
+tidytuesday, rfordatascience. 2024. <span>“The Olympics.”</span> <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-07-27">https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-07-27</a>.
 </div>
 <div id="ref-ward2024" class="csl-entry" role="listitem">
 Ward, Stephanie B. 2024. <span>“Olympics - Class Example.”</span> <em>Open Science Framework</em>, April. <a href="https://doi.org/10.17605/OSF.IO/KV6WP">https://doi.org/10.17605/OSF.IO/KV6WP</a>.

@@ -1,5 +1,13 @@
 ---
-title: "Final Paper"
+title: How do personal characteristics influence an athlete's odds of winning gold? 
+subtitle: A Secondary Analysis of the Olympic Games
+date: 2024-05-01
+title-block-style: default
+author:
+  - name: Aggie Laboe
+    affiliation: University of Wisconsin-Madison
+  - name: Stephanie B. Ward
+    affiliation: University of Wisconsin-Madison
 format: html
 editor: visual
 bibliography: references.bib
@@ -11,20 +19,21 @@ library(knitr)
 library(dplyr)
 library(janitor)
 library(kableExtra)
+library(broom.mixed)
 ```
 
 ```{r,echo=FALSE}
-# Include at least 3 citations throughout the manuscript
+# Done:
+# # Include at least 3 citations throughout the manuscript 
+# # Reference your OSF pre-registrations somewhere in the paper
 
-# Reference your OSF pre-registrations somewhere in the paper
+# Still need to:
+# # add README text file 
+# # write discussion paragraph
+# # flesh out results  
+# # add tinytex to the terminal ?
+# # add word to the .yml file = will do last
 
-# don't render QMD file until you're the only one working; rendering could affect downstream files
-
-# add word to the .yml file
-
-# add tinytex to the terminal
-
-# Include at least 3 citations throughout the manuscript, along with one table and one figure for each aim, with appropriate cross-referencing. Headings and # subheadings should be set appropriately. Discuss variable scoring in the method section, and reference your OSF pre-registrations somewhere in the paper.
 ```
 
 ## Introduction
@@ -39,17 +48,15 @@ Innovations in rehabilitation techniques, injury prevention, and nutritional str
 
 We value open science and adhered to high standards of research integrity in this study, maximizing research transparency and replicability through several means.
 
-First, we preregistered our research aims, hypotheses, data manipulations, analytic plans, and the exact analytic code proposed for hypothesis testing on the Open Science Framework (OSF). The preregistrations for Aim 1 @laboe2024 and Aim 2 @ward2024 are time-stamped and publicly accessible.
+First, we preregistered our research aims, hypotheses, data manipulations, analytic plans, and the exact analytic code proposed for hypothesis testing on the Open Science Framework (OSF). Preregistrations for Aims 1 [@laboe2024] and 2 [@ward2024] are time-stamped and publicly accessible.
 
-In this manuscript, we also explicitly label our analyses as confirmatory or exploratory and identify any deviations from the preregistred study protocols.
-
-Finally, we provide detailed descriptions of our data, methodologies, and data analysis procedures in the following sections and have shared all analysis scripts in our publicly-accessible GitHub repository.
+We also provide R scripts for scoring and hypothesis testing on this project's publicly-accessible GitHub repository; these analysis scripts can be run in their entirety with the Olympics data. Finally, we provide detailed descriptions of our data, methodologies, and data analysis procedures in the following sections.
 
 ### Data Description
 
 To explore these research questions, we conducted a secondary analysis using a longitudinal, historical dataset on the modern Olympic Games. These data include all the Games, from Athens 1896 to Rio 2016, but the Winter and Summer Games were held in the same year up until 1992. As the Games were staggered on a four year cycle starting with 1994, we used a subset of the *Olympics* dataset with years 1994 and onwards. The Olympics dataset included the raw variables outlined in @tbl-raw.
 
-As this is a secondary analysis of the longitudinal, #tidytuesday 'Olympics' dataset, we cannot take credit for collecting or sharing these data with the public. The Olympic data [@sportsr] is the result of labor performed by a group of Olympic history enthusiasts. For more information, please refer to their blog [@olympsta2024]. For details on where and how the Olympic dataset can be accessed, please refer to Kaggle.com [@120year] and GitHub [@tidytues].
+As this is a secondary analysis of the longitudinal, #tidytuesday 'Olympics' dataset, we cannot take credit for collecting or sharing these data with the public. The Olympic data is the result of labor performed by a group of Olympic history enthusiasts. For more information, please refer to their blog [@olympsta2024]. For details on where and how the Olympic dataset can be accessed, please refer to GitHub [@tidytuesday2024] and Kaggle.com [@griffin2018].
 
 ```{r,echo=FALSE}
 #| label: tbl-raw
@@ -71,7 +78,6 @@ kable(raw_vars, booktabs = TRUE, align = 'lll', col.names = c("Variable", "Class
   kable_styling(full_width = FALSE)
 ```
 
-
 ### Variable Scoring
 
 We manipulated a few of these variables for use in analyses designed to address our research questions. Please refer to @tbl-new for a summary of the changes outlined in more detail below.
@@ -79,29 +85,6 @@ We manipulated a few of these variables for use in analyses designed to address 
 #### Gold Medal
 
 To create the outcome variable for hypothesis testing, the raw "medal" character variable was recoded as a dichotomous "gold" factor variable with levels for "gold" (1), and "silver or bronze" = (0). Observations for athletes competing during a given year who did not win a medal were treated as not applicable (NA).
-
-#### Event Gender
-
-The raw "event" variable in the Olympics dataset represented multiple variables in one, including the type of sport, whether the event was for individuals or teams, and whether the event was for Men, Women, or Mixed-gender teams.\
-\
-Good enough practices in scientific computing recommend making each column a variable when working to create analysis-friendly data @wilson2017. As such, we extracted the gender category from the "event" column and coded a new "event_gender" character variable with categorical levels outlined in @tbl-gend.
-
-```{r,echo=FALSE}
-#| label: tbl-gend
-#| tbl-cap: "Event Gender Categories"
-ev_gend <- data.frame(
-  levels = c("Men's", "Mixed", "Women's"),
-  n = c("182260", "16940", "71916"),
-  percent = c("67", "6", "27"))
-
-kable(ev_gend, booktabs = TRUE, align = 'lll', 
-      col.names = c("Levels", "n", "Percent")) %>%
-  kable_styling(full_width = FALSE)
-```
-
-#### Athlete Gender
-
-To create the athlete gender predictor variable for testing Hypothesis 1, the raw "sex" character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), making it easier to interpret regression coefficients @brauer2018. In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for "M" (-0.5) and "F" (0.5) should facilitate the modeling and interpretation gender-related effects.
 
 ```{r,echo=FALSE}
 #| label: tbl-new
@@ -120,6 +103,31 @@ kable(new_vars, booktabs = TRUE, align = 'lll',
   kable_styling(full_width = FALSE)
 ```
 
+#### Event Gender
+
+The raw "event" variable in the Olympics dataset represented multiple variables in one, including the type of sport, whether the event was for individuals or teams, and whether the event was for Men, Women, or Mixed-gender teams.\
+\
+Good enough practices in scientific computing recommend making each column a variable when working to create analysis-friendly data [@wilson2017]. As such, we extracted gender from the "event" column and coded a new "event_gender" character variable with categorical levels outlined in @tbl-gend.
+
+```{r,echo=FALSE}
+#| label: tbl-gend
+#| tbl-cap: "Event Gender Categories"
+ev_gend <- data.frame(
+  levels = c("Men's", "Mixed", "Women's"),
+  n = c("182260", "16940", "71916"),
+  percent = c("67", "6", "27"))
+
+kable(ev_gend, booktabs = TRUE, align = 'lll', 
+      col.names = c("Levels", "n", "Percent")) %>%
+  kable_styling(full_width = FALSE)
+```
+
+#### Athlete Gender
+
+To create the athlete gender predictor variable for testing Hypothesis 1, the raw "sex" character variable was contrast-coded over zero. Contrast coding is an alternative to dummy coding for representing variables with two categories; it is particularly useful for hypothesis testing as the values are symmetrical around zero (i.e., -0.5 and 0.5), easing interpretations of regression coefficients [@brauer2018].
+
+In this case, the coefficient provides the average difference between the two categories, and the intercept reflects the grand mean (i.e., the mean across both categories). This new, dichotomous variable with levels for "M" (-0.5) and "F" (0.5) should facilitate the modeling and interpretation gender-related effects.
+
 ### Specific Aims
 
 #### Aim 1
@@ -128,7 +136,7 @@ To analyze the influence of biological sex on the likelihood of winning a gold m
 
 #### Aim 2
 
-To analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onwards, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.
+To analyze the influence of age on the likelihood of winning a gold medal for Olympic athletes from 1994 onward, controlling for the non-independence of multiple observations per athlete by employing a mixed-effects logistic regression model.
 
 ### Hypotheses
 
@@ -138,13 +146,40 @@ H1: Males will be more likely to receive a gold medal during the Olympic Games t
 
 #### Hypothesis 2
 
-H2: After controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onwards is significantly, positively associated with the age of the athlete, such that every one-unit increase in age increases the odds of winning gold (versus silver or bronze).
+H2: After controlling for the non-independence of multiple observations per athlete, the likelihood of winning a gold medal from 1994 onward is significantly, positively associated with the age of the athlete, such that every one-unit increase in age increases the odds of winning gold (versus silver or bronze).
 
 ## Results
 
 ### Aim 1
 
+```{r, echo=FALSE}
+#| label: tbl-aim1
+#| tbl-cap: "Mixed-Effects Logistic Regression Model Predicting Gold from Gender"
 
+# aim1_anova <- readRDS("results/anova_results.rds")
+# kable(aim1_anova, booktabs = TRUE, align = 'lll') %>%
+#  kable_styling(full_width = FALSE)
+
+aim1_glmer <- readRDS("results/glmer_model.rds")
+aim1_fixed <- tidy(aim1_glmer, effects = "fixed")
+aim1_random <- tidy(aim1_glmer, effects = "ran_pars")
+aim1_df <- bind_rows(aim1_fixed, aim1_random)
+
+aim1_df <- aim1_df %>%
+  mutate(across(where(is.numeric), ~round(., 3)),
+         across(everything(), ~ifelse(is.na(.), "-", .)))
+
+kable(aim1_df, booktabs = TRUE, align = 'lll',
+            col.names = c("Effect", "Term", "Estimate", "SE", "Statistic", "p", "Group")) %>%
+  kable_styling(full_width = FALSE)
+```
+
+```{r, echo=FALSE}
+#| label: fig-aim1fig1
+#| fig-cap: "Fixed Effects Bar Plot Visualizing Impact of Gender on Gold"
+
+knitr::include_graphics("figs/fixed_effects_plot_bar.png")
+```
 
 ### Aim 2
 
@@ -153,26 +188,28 @@ Hypothesis 2 was not supported. See @tbl-aim2 for more information.
 ```{r,echo=FALSE}
 #| label: tbl-aim2
 #| tbl-cap: "Mixed-Effects Logistic Regression Model Predicting Gold from Age"
-df1 <- read.csv("~/Documents/final_steph/data/tidy_fixed_effects.csv")
-df2 <- read.csv("~/Documents/final_steph/data/tidy_random_effects.csv")
-df3 <- read.csv("~/Documents/final_steph/data/aim2_summary_output.csv")
+df1 <- read.csv("~/Documents/final_steph/results/tidy_fixed_effects.csv")
+df2 <- read.csv("~/Documents/final_steph/results/tidy_random_effects.csv")
+df3 <- read.csv("~/Documents/final_steph/results/aim2_summary_output.csv")
 
-aim2_df <- bind_rows(df1, df2, df3)
+aim2_df <- bind_rows(df1, df2)
+
+aim2_df <- aim2_df %>%
+  mutate(across(where(is.numeric), ~round(., 3)),
+         across(everything(), ~ifelse(is.na(.), "-", .)))  # Replace NA with "-"
 
 # Use kable to create a nice table format
 kable(aim2_df, booktabs = TRUE, align = 'lll', 
-      col.names = c("Effect", "Group", "Term", "Estimate", "SE", "Statistic", "p",
-                    "AIC", "BIC", "logLik")) %>%
+      col.names = c("Effect", "Group", "Term", "Estimate", "SE", "Statistic", "p")) %>%
   kable_styling(full_width = FALSE)
 ```
 
 ```{r,echo=FALSE}
 #| label: fig-aim2fig1
-#| fig-cap: "Coefficient Plot Visualizing the Fixed Effects"
+#| fig-cap: "Fixed Effects Coefficient Plot Visualizing Impact of Age on Gold"
 
+knitr::include_graphics("figs/aim2fig1.png")
 ```
-
-![](images/aim2fig1.png)
 
 ## Discussion
 
